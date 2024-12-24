@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Navidad</title>
+  <style>
+    /* Estilos generales */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #87CEEB, #FFFFFF);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .contenedor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* Mensaje de Navidad */
+    .mensaje-navidad {
+      font-size: 3rem;
+      font-weight: bold;
+      text-align: center;
+      color: #f39c12;
+      text-shadow: 2px 2px 5px #e74c3c;
+    }
+
+    /* Santa Claus */
+    #santa {
+        width: 50%;
+        animation: balanceo 2s infinite alternate;
+        margin-top: 20px;
+    }
+
+    @keyframes balanceo {
+      0% { transform: rotate(-5deg); }
+      100% { transform: rotate(5deg); }
+    }
+
+    /* Nieve */
+    .copo-nieve {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: caida linear infinite;
+    }
+
+    @keyframes caida {
+      0% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    /* Luna */
+    .luna {
+      position: absolute;
+      top: 10%;
+      right: 10%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #d9d9d9;
+      box-shadow: 0 0 50px #d9d9d9;
+    }
+
+    /* Estilos para la superposición de interacción */
+    #solicitud-audio {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    #solicitud-audio button {
+      padding: 20px;
+      font-size: 20px;
+      background: #f39c12;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+
+    #solicitud-audio boton:hover {
+      background: #e67e22;
+    }
+  </style>
+</head>
+<body>
+  <div id="solicitud-audio">
+    <button>tocame</button>
+  </div>
+
+  <header class="contenedor">
+    <div class="mensaje-navidad">¡Feliz Navidad y Próspero Año Nuevo!</div>
+    <img id="santa" src="papanoel.png" alt="Santa Claus">
+    <div class="luna"></div>
+    <audio id="cancion-navidad" auto loop>
+      <source src="villancicos.mp3" type="audio/mp3">
+      Tu navegador no soporta audio HTML5.
+    </audio>
+  </header>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const contenedor = document.querySelector('.contenedor');
+      const audio = document.getElementById('cancion-navidad');
+      const solicitud = document.getElementById('solicitud-audio');
+
+      // Función para crear copos de nieve
+      const crearCoposNieve = () => {
+        const cantidadCopos = 150;
+        for (let i = 0; i < cantidadCopos; i++) {
+          const copo = document.createElement('div');
+          copo.className = 'copo-nieve';
+          copo.style.left = `${Math.random() * 100}%`;
+          copo.style.animationDuration = `${3 + Math.random() * 2}s`;
+          copo.style.animationDelay = `-${Math.random() * 5}s`;
+          contenedor.appendChild(copo);
+        }
+      };
+
+      // Iniciar la experiencia al hacer clic en el botón
+      document.querySelector('#solicitud-audio button').addEventListener('click', () => {
+        audio.play().catch(() => {
+          console.log('Error al reproducir el audio.');
+        });
+        solicitud.style.display = 'none'; // Oculta el mensaje de interacción
+      });
+
+      // Crear los copos de nieve
+      crearCoposNieve();
+    });
+  </script>
+</body>
+</html>
