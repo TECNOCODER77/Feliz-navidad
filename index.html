@@ -26,14 +26,30 @@
 
     /* Santa Claus */
     #santa {
-        width: 50%;
-        animation: balanceo 2s infinite alternate;
-        margin-top: 20px;
+      width: 50%;
+      animation: balanceo 2s infinite alternate;
+      margin-top: 20px;
+      transition: all 0.3s ease;
     }
 
     @keyframes balanceo {
       0% { transform: rotate(-5deg); }
       100% { transform: rotate(5deg); }
+    }
+
+    /* Ajustes para pantallas pequeñas */
+    @media (max-width: 768px) {
+      #santa {
+        width: 60%; /* Aumenta el ancho al 60% */
+        margin-top: 10px; /* Reduce el margen superior para que quede un poco más arriba */
+      }
+    }
+
+    @media (max-width: 480px) {
+      #santa {
+        width: 70%; /* Aumenta aún más el ancho */
+        margin-top: 0; /* Haz que quede aún más arriba */
+      }
     }
 
     /* Nieve */
@@ -151,4 +167,3 @@
   </script>
 </body>
 </html>
-
